@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>Contacto</h1>
+
+    <form>
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" id="nombre">
+        <br>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+        <br>
+        <label for="mensaje">Mensaje</label>
+        <textarea name="mensaje" id="mensaje" cols="30" rows="10"></textarea>
+        <br>
+        <input type="submit" value="Enviar">
+
+    </form>
+
+
+    <div>
+        <pre id="results">
+        
+        </pre>
+
+    </div>
+
+    <script>
+
+        let $form = document.querySelector("form");
+
+        $form.addEventListener("submit", function (e) {//cuando se envia el formulario
+            e.preventDefault();//evita que se recargue la pagina
+
+            let nombre = document.querySelector("#nombre").value; //obtiene el valor del input nombre
+            let email = document.querySelector("#email").value;//obtiene el valor del input email
+            let mensaje = document.querySelector("#mensaje").value;//obtiene el valor del input mensaje
+
+            let data = { //crea un objeto con los datos del formulario
+                nombre: nombre,
+                email: email,
+                mensaje: mensaje
+            }
+
+            let dataJSON = JSON.stringify(data); //convierte el objeto a JSON
+
+            console.log(dataJSON); //muestra el JSON en la consola
+
+            let $results = document.querySelector("#results"); //obtiene el elemento con id results
+            $results.innerHTML = dataJSON; //muestra el JSON en el HTML
+
+        })// fin del evento submit
+
+        
+
+
+    </script>
+
+</body>
+
+</html>

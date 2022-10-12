@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON</title>
+</head>
+
+<body>
+
+    <script>
+
+
+        let empanadas = [
+            {
+                "id": 1,
+                "nombre": "Empanada de carne",
+                "precio": 100,
+                "stock": 10
+            },
+            {
+                "id": 2,
+                "nombre": "Empanada de pollo",
+                "precio": 80,
+                "stock": 20
+            },
+            {
+                "id": 3,
+                "nombre": "Empanada de jamón y queso",
+                "precio": 90,
+                "stock": 15
+            }
+        ]
+
+        
+        let empanadasJSON = JSON.stringify(empanadas); // convierte el array de objetos a JSON
+        console.log(empanadasJSON); // muestra el JSON en la consola
+
+        let empanadasObj = JSON.parse(empanadasJSON); // convierte el JSON a un array de objetos
+
+        console.log(empanadasObj); // muestra el array de objetos en la consola
+
+        
+        // muestra el array de objetos en el HTML
+
+        let html = "<ul>";
+        for (let i = 0; i < empanadasObj.length; i++) {
+            html += "<li>" + empanadasObj[i].nombre + "</li>";
+        }
+
+        html += "</ul>";
+
+        document.write(html);
+
+
+        function getEmpanadas() {
+            return empanadasObj;
+        }
+
+        console.log(getEmpanadas()[0].nombre); // muestra el nombre de la primera empanada
+
+
+        //simulacion de asincronismo
+
+        setTimeout(function () { // se ejecuta una funcion despues de 3 segundos
+            console.log(getEmpanadas()[1].nombre); // muestra el nombre de la segunda empanada
+        }, 2000); // 2000 milisegundos = 2 segundos
+
+        
+
+
+        //simulacion de asincronismo con promesas
+        // la promesa se ejecuta de forma asincronica
+        let promesa = new Promise(function (resolve, reject) { // crea una promesa
+            setTimeout(function () {
+                resolve(getEmpanadas()[2].nombre); // muestra el nombre de la tercera empanada
+            }, 4000);
+        }); // fin de la promesa
+
+        promesa.then(function (nombre) {
+            console.log(nombre);
+        }); // muestra el nombre de la tercera empanada
+
+
+        // la promesa simula una peticion a un servidor, que tarda 4 segundos en responder y devuelve un objeto JSON.
+
+        //la promesa sirve para que el codigo no se detenga hasta que el servidor responda, sino que se ejecuta el codigo y cuando el servidor responda, se ejecuta el codigo que sigue a la promesa.
+
+
+        //simulacion de asincronismo con promesas y fetch
+
+        fetch("https://jsonplaceholder.typicode.com/todos/1") // hace una peticion a un servidor
+            .then(function (response) { // cuando el servidor responde, ejecuta la funcion
+                return response.json(); // convierte el JSON a un objeto
+            })
+            .then(function (data) { // cuando el JSON se convierte en un objeto, ejecuta la funcion
+                console.log(data); // muestra el objeto en la consola
+            });
+
+
+        //simulacion de asincronismo con promesas y fetch y async await
+
+        async function getDatos() {
+            let response = await fetch("https://jsonplaceholder.typicode.com/todos/1"); // hace una peticion a un servidor
+            let data = await response.json(); // convierte el JSON a un objeto
+            console.log(data); // muestra el objeto en la consola
+        }
+
+        getDatos(); // ejecuta la funcion getDatos
+
+        // async await es una forma mas simple de hacer lo mismo que con promesas y fetch
+
+    
+        
+    </script>
+
+
+
+</body>
+
+</html>
